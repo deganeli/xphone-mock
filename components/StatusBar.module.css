@@ -1,0 +1,58 @@
+.bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 54px;
+  padding: 0 26px 0 30px;
+  color: var(--text);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.signal {
+  width: 14px;
+  height: 14px;
+  transform: scaleX(-1);
+}
+
+.dnd {
+  display: grid;
+  place-items: center;
+  color: var(--dnd);
+}
+
+.clock {
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.battery {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.level {
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.ring {
+  width: 18px;
+  height: 18px;
+}
