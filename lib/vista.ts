@@ -245,6 +245,139 @@ export const directThreads: DirectThread[] = [
   },
 ];
 
+export type MyVista = {
+  name: string;
+  handle: string;
+  place: string;
+  bio: string;
+  /** Vazio = usa o gradiente com a inicial do nome. */
+  photo: string;
+  tint: string;
+  privateAccount: boolean;
+  showActivity: boolean;
+  followers: number;
+  following: number;
+  grid: [string, string][];
+};
+
+export const VISTA_BIO_LIMIT = 150;
+export const HANDLE_PATTERN = /^[a-z0-9._]{3,24}$/;
+
+export const me: MyVista = {
+  name: "Lukas",
+  handle: "lukas.ls",
+  place: "Little Seoul",
+  bio: "Turno da noite, oficina de dia. Fotos do que passa na rua às 4h.",
+  photo: "",
+  tint: "#ff6b3d",
+  privateAccount: false,
+  showActivity: true,
+  followers: 412,
+  following: 233,
+  grid: [
+    ["#ff6b3d", "#2a0c04"],
+    ["#35c7ff", "#08243a"],
+    ["#ffd06b", "#4a3208"],
+    ["#c96bff", "#2a0a44"],
+    ["#2fd96b", "#07351c"],
+    ["#ff4d8d", "#3a0a1e"],
+  ],
+};
+
+export type ActivityKind = "curtida" | "comentario" | "seguidor" | "mencao";
+
+export type Activity = {
+  id: string;
+  kind: ActivityKind;
+  handle: string;
+  tint: string;
+  text: string;
+  at: string;
+  bucket: "hoje" | "semana" | "antes";
+  /** Preenchido quando a atividade aponta para um post do feed. */
+  postId?: string;
+  followsBack?: boolean;
+};
+
+export const activity: Activity[] = [
+  {
+    id: "a1",
+    kind: "curtida",
+    handle: "iris.galaxy",
+    tint: "#c96bff",
+    text: "curtiu sua foto",
+    at: "há 12 min",
+    bucket: "hoje",
+    postId: "p1",
+  },
+  {
+    id: "a2",
+    kind: "comentario",
+    handle: "clara.guincho",
+    tint: "#2fd96b",
+    text: 'comentou: "esse retrovisor é original?"',
+    at: "há 40 min",
+    bucket: "hoje",
+    postId: "p2",
+  },
+  {
+    id: "a3",
+    kind: "seguidor",
+    handle: "duda.resgate",
+    tint: "#ffd06b",
+    text: "começou a seguir você",
+    at: "há 2 h",
+    bucket: "hoje",
+    followsBack: false,
+  },
+  {
+    id: "a4",
+    kind: "mencao",
+    handle: "vito.mirror",
+    tint: "#ff6b3d",
+    text: "mencionou você num comentário",
+    at: "ontem",
+    bucket: "semana",
+    postId: "p3",
+  },
+  {
+    id: "a5",
+    kind: "curtida",
+    handle: "bennys.oficial",
+    tint: "#35c7ff",
+    text: "e mais 23 pessoas curtiram sua foto",
+    at: "há 3 dias",
+    bucket: "semana",
+    postId: "p4",
+  },
+  {
+    id: "a6",
+    kind: "seguidor",
+    handle: "clara.guincho",
+    tint: "#2fd96b",
+    text: "começou a seguir você",
+    at: "há 5 dias",
+    bucket: "semana",
+    followsBack: true,
+  },
+  {
+    id: "a7",
+    kind: "comentario",
+    handle: "duda.resgate",
+    tint: "#ffd06b",
+    text: 'comentou: "avisa quando subir no morro de novo"',
+    at: "há 2 semanas",
+    bucket: "antes",
+    postId: "p1",
+  },
+];
+
+export const activityBuckets: { id: Activity["bucket"]; title: string }[] = [
+  { id: "hoje", title: "Hoje" },
+  { id: "semana", title: "Esta semana" },
+  { id: "antes", title: "Antes" },
+];
+
 const compact = new Intl.NumberFormat("pt-BR");
 
 export const formatCount = (value: number) => compact.format(value);

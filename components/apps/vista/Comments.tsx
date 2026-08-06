@@ -18,7 +18,7 @@ export function Comments({ post, onClose }: { post: Post; onClose: () => void })
 
     setThread((prev) => [
       ...prev,
-      { id: `local-${prev.length}`, handle: "lukas.ls", text, at: "agora", likes: 0, tint: "#8e8ea3" },
+      { id: `local-${prev.length}`, handle: "lukas.ls", text, at: "agora", likes: 0, tint: "var(--steel)" },
     ]);
     setDraft("");
   };

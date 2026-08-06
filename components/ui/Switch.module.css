@@ -1,0 +1,27 @@
+.track {
+  flex: none;
+  display: flex;
+  align-items: center;
+  width: 44px;
+  height: 26px;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--fill-strong);
+  transition: background 0.2s var(--ease-ios);
+}
+
+.trackOn {
+  /* Cada app pode tingir o switch redefinindo --switch-tint; a forma nunca muda. */
+  background: var(--switch-tint, var(--accent));
+}
+
+.knob {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--text);
+}
+
+.trackOn .knob {
+  background: var(--switch-ink, var(--on-accent));
+}

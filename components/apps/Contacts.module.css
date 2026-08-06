@@ -199,7 +199,7 @@
 }
 
 .railKey:hover {
-  color: var(--bay);
+  color: var(--accent);
 }
 
 .detail {
@@ -219,14 +219,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.back {
-  display: flex;
-  align-items: center;
-  gap: 1px;
-  font-size: 15px;
-  color: var(--bay);
 }
 
 .starToggle {
@@ -344,7 +336,7 @@
   border: 1px solid var(--glass-line);
   background: var(--fill);
   font-size: 15px;
-  color: var(--bay);
+  color: var(--accent);
 }
 
 .toast {

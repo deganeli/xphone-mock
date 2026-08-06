@@ -215,8 +215,8 @@
 
 .like {
   color: var(--flame);
-  border-color: rgba(255, 77, 141, 0.4);
-  box-shadow: 0 0 0 1px rgba(255, 77, 141, 0.12) inset;
+  border-color: color-mix(in srgb, var(--flame) 42%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--flame) 13%, transparent) inset;
 }
 
 .matchScrim {
@@ -234,8 +234,8 @@
   width: 100%;
   padding: 24px 22px 20px;
   border-radius: 22px;
-  border: 1px solid rgba(255, 77, 141, 0.35);
-  background: linear-gradient(160deg, rgba(255, 77, 141, 0.2), rgba(20, 20, 27, 0.95) 60%);
+  border: 1px solid color-mix(in srgb, var(--flame) 36%, transparent);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--flame) 21%, transparent), rgba(20, 20, 27, 0.95) 60%);
   text-align: center;
 }
 
@@ -285,14 +285,6 @@
   height: 100%;
   overflow-y: auto;
   padding: 58px 18px 44px;
-}
-
-.back {
-  display: flex;
-  align-items: center;
-  gap: 1px;
-  font-size: 15px;
-  color: var(--bay);
 }
 
 .chatsTitle {
@@ -450,13 +442,7 @@
   border-bottom: 1px solid var(--glass-line);
 }
 
-.threadBar .back {
-  position: absolute;
-  left: 14px;
-  bottom: 11px;
-}
-
-.threadName {
+.threadBar .threadName {
   font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.012em;
@@ -546,4 +532,176 @@
 .composerSend:disabled {
   opacity: 0.32;
   cursor: default;
+}
+
+.meButton {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: var(--on-flame);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.me {
+  --form-tint: var(--flame);
+  --form-ink: var(--on-flame);
+  position: absolute;
+  inset: 0;
+  z-index: 21;
+  background: var(--void);
+}
+
+.meScroll {
+  height: 100%;
+  overflow-y: auto;
+  padding: 58px 18px 44px;
+}
+
+.meTitle {
+  margin: 10px 0 16px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.mePhoto {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 220px;
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+.meInitial {
+  font-size: 74px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.mePhotoInfo {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.meAge {
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.meSelect {
+  appearance: none;
+  color-scheme: dark;
+  padding-right: 34px;
+  /* Seta própria: a nativa não herda cor no tema escuro. */
+  background-image: linear-gradient(45deg, transparent 50%, var(--text-dim) 50%),
+    linear-gradient(135deg, var(--text-dim) 50%, transparent 50%);
+  background-position:
+    right 17px center,
+    right 12px center;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.meSelect option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.meSelect option:checked {
+  background: var(--flame);
+  color: var(--on-flame);
+}
+
+.meDelete {
+  width: 100%;
+  height: 46px;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--danger) 34%, transparent);
+  color: var(--danger);
+  font-size: 14.5px;
+}
+
+.meConfirm {
+  display: grid;
+  gap: 10px;
+  padding: 4px 4px 8px;
+}
+
+.meConfirmTitle {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.meConfirmBody {
+  margin: 0 0 6px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+
+.meConfirmDelete {
+  height: 46px;
+  border-radius: 14px;
+  background: var(--danger);
+  color: var(--text);
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.meConfirmCancel {
+  height: 44px;
+  border-radius: 14px;
+  background: var(--fill);
+  font-size: 14.5px;
+}
+
+.gone {
+  flex: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 0 40px;
+  text-align: center;
+}
+
+.goneTitle {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.goneBody {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: var(--text-dim);
+}
+
+.goneAction {
+  margin-top: 12px;
+  padding: 12px 22px;
+  border-radius: 14px;
+  background: var(--flame);
+  color: var(--on-flame);
+  font-size: 14px;
+  font-weight: 600;
 }

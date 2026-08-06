@@ -141,7 +141,7 @@
   align-items: center;
   gap: 3px;
   font-family: var(--font-mono), monospace;
-  color: #ffd06b;
+  color: var(--star);
 }
 
 .get {
@@ -162,7 +162,7 @@
 
 .open {
   background: var(--store);
-  color: #04102e;
+  color: var(--on-store);
 }
 
 .downloading {

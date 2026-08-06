@@ -6,6 +6,7 @@ import { ChevronLeft, SendIcon } from "../../icons";
 import { directThreads as seed, type DirectThread } from "@/lib/vista";
 import { pushSpring } from "@/lib/motion";
 import styles from "../Vista.module.css";
+import form from "../../ui/form.module.css";
 
 export function Direct({ initialHandle, onBack }: { initialHandle: string | null; onBack: () => void }) {
   const [threads, setThreads] = useState<DirectThread[]>(seed);
@@ -51,7 +52,7 @@ export function Direct({ initialHandle, onBack }: { initialHandle: string | null
       transition={pushSpring}
     >
       <div className={styles.directList}>
-        <button className={styles.back} onClick={onBack}>
+        <button className={form.back} onClick={onBack}>
           <ChevronLeft />
           <span>Vista</span>
         </button>
@@ -88,7 +89,7 @@ export function Direct({ initialHandle, onBack }: { initialHandle: string | null
             transition={pushSpring}
           >
             <header className={styles.directBar}>
-              <button className={styles.back} onClick={() => setOpenId(null)}>
+              <button className={form.back} onClick={() => setOpenId(null)}>
                 <ChevronLeft />
                 <span>Direct</span>
               </button>

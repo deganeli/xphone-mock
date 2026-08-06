@@ -2,8 +2,11 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { CommentIcon, HeartIcon, HeartOutlineIcon, SendIcon } from "../icons";
-import { directThreads, formatCount, posts, stories, type Post } from "@/lib/vista";
+import { CommentIcon, HeartIcon, HeartOutlineIcon, SendIcon, SettingsIcon } from "../icons";
+import { Activity } from "./vista/Activity";
+import { MyProfile } from "./vista/MyProfile";
+import { MyProfileView } from "./vista/MyProfileView";
+import { activity, directThreads, formatCount, me as seedMe, posts, stories, type MyVista, type Post } from "@/lib/vista";
 import { Comments } from "./vista/Comments";
 import { Direct } from "./vista/Direct";
 import { Profile } from "./vista/Profile";
@@ -118,8 +121,14 @@ export function Vista() {
   const [directOpen, setDirectOpen] = useState(false);
   const [commentsFor, setCommentsFor] = useState<Post | null>(null);
   const [story, setStory] = useState<Story | null>(null);
+  const [activityOpen, setActivityOpen] = useState(false);
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [mineOpen, setMineOpen] = useState(false);
+  const [account, setAccount] = useState<MyVista>(seedMe);
 
   const unread = directThreads.filter((thread) => thread.unread).length;
+  const fresh = activity.filter((item) => item.bucket === "hoje").length;
 
   const openDirect = (handle: string | null) => {
     setDirectHandle(handle);
@@ -131,8 +140,60 @@ export function Vista() {
       <div className={styles.scroll}>
         <header className={styles.head}>
           <h1 className={styles.title}>Vista</h1>
+          <div className={styles.menuWrap}>
+            <button
+              className={styles.menuButton}
+              onClick={() => setMenuOpen((prev) => !prev)}
+              aria-expanded={menuOpen}
+              aria-label="Opções do perfil"
+            >
+              <SettingsIcon size={20} />
+            </button>
+
+            <AnimatePresence>
+              {menuOpen ? (
+                <>
+                  <button className={styles.menuScrim} onClick={() => setMenuOpen(false)} aria-label="Fechar menu" />
+                  <motion.div
+                    className={styles.menu}
+                    initial={{ opacity: 0, scale: 0.94, y: -6 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96, y: -4 }}
+                    transition={{ duration: 0.16, ease: "easeOut" }}
+                  >
+                    <button
+                      className={styles.menuItem}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setMineOpen(true);
+                      }}
+                    >
+                      Ver perfil
+                    </button>
+                    <button
+                      className={styles.menuItem}
+                      onClick={() => {
+                        setMenuOpen(false);
+                        setEditorOpen(true);
+                      }}
+                    >
+                      Editar perfil
+                    </button>
+                  </motion.div>
+                </>
+              ) : null}
+            </AnimatePresence>
+          </div>
+          <button
+            className={styles.directButton}
+            onClick={() => setActivityOpen(true)}
+            aria-label="Abrir atividade"
+          >
+            <HeartOutlineIcon size={23} />
+            {fresh > 0 ? <span className={styles.directBadge}>{fresh}</span> : null}
+          </button>
           <button className={styles.directButton} onClick={() => openDirect(null)} aria-label="Abrir direct">
-            <SendIcon size={20} />
+            <SendIcon size={23} />
             {unread > 0 ? <span className={styles.directBadge}>{unread}</span> : null}
           </button>
         </header>
@@ -164,6 +225,41 @@ export function Vista() {
 
         <p className={styles.end}>Você viu tudo do dia</p>
       </div>
+
+      <AnimatePresence>
+        {mineOpen ? (
+          <MyProfileView
+            profile={account}
+            onEdit={() => setEditorOpen(true)}
+            onBack={() => setMineOpen(false)}
+          />
+        ) : null}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {editorOpen ? (
+          <MyProfile
+            profile={account}
+            onSave={(next) => {
+              setAccount(next);
+              setEditorOpen(false);
+            }}
+            onBack={() => setEditorOpen(false)}
+          />
+        ) : null}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {activityOpen ? (
+          <Activity
+            onBack={() => setActivityOpen(false)}
+            onOpenProfile={(handle) => {
+              setActivityOpen(false);
+              setProfileHandle(handle);
+            }}
+          />
+        ) : null}
+      </AnimatePresence>
 
       <AnimatePresence>
         {profileHandle ? (

@@ -6,6 +6,7 @@ import { ChevronLeft, SendIcon } from "../icons";
 import { threads as seed, type Message, type Thread } from "@/lib/messages";
 import { pushSpring } from "@/lib/motion";
 import styles from "./Messages.module.css";
+import form from "../ui/form.module.css";
 
 export function Messages() {
   const [threads, setThreads] = useState<Thread[]>(seed);
@@ -71,7 +72,7 @@ export function Messages() {
               transition={pushSpring}
             >
               <header className={styles.threadBar}>
-                <button className={styles.back} onClick={() => setOpenId(null)}>
+                <button className={`${form.back} ${styles.backFloat}`} onClick={() => setOpenId(null)}>
                   <ChevronLeft />
                   <span>Voltar</span>
                 </button>

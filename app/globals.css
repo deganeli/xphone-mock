@@ -23,6 +23,7 @@
   --on-flame: #24040f;
   --on-market: #0d0620;
   --on-vista: #200612;
+  --on-store: #04102e;
   --sunset: #ff6b3d;
   --cash: #2fd96b;
   --bay: #35c7ff;
@@ -33,6 +34,11 @@
   --text: #f2f2f5;
   --text-dim: rgba(242, 242, 245, 0.52);
   --text-faint: rgba(242, 242, 245, 0.32);
+
+  /* Sobrescritos em tempo de execução pelos Ajustes > Personalização. */
+  --accent: #7c5cff;
+  --on-accent: #0d0620;
+  --wallpaper: url("/bg.png");
 
   --screen-w: 390px;
   --screen-h: 844px;

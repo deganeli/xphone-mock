@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, type FormEvent } from "react";
 import { AddContactIcon, BackspaceIcon, PhoneIcon } from "../icons";
+import { CallScreen } from "./CallScreen";
 import { useContacts } from "@/lib/contacts";
 import { tapSpring } from "@/lib/motion";
 import { Sheet } from "../ui/Sheet";
@@ -30,12 +31,19 @@ export function Dialer() {
   const [saving, setSaving] = useState(false);
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
+  const [ringing, setRinging] = useState<{ phone: string; name: string | null; tint: string } | null>(null);
 
   const known = contacts.find((contact) => contact.phone === dialed) ?? null;
 
   const call = () => {
     if (!dialed) return;
-    logCall(dialed);
+    setRinging({ phone: dialed, name: known?.name ?? null, tint: known?.tint ?? "var(--steel)" });
+  };
+
+  const hangUp = () => {
+    if (!ringing) return;
+    logCall(ringing.phone);
+    setRinging(null);
     setDialed("");
     setTab("recentes");
   };
@@ -149,11 +157,18 @@ export function Dialer() {
               disabled={!dialed}
               aria-label="Apagar dígito"
             >
-              <BackspaceIcon size={26} />
+              <BackspaceIcon size={20} />
+              Apagar
             </button>
           </div>
         </div>
       )}
+
+      <AnimatePresence>
+        {ringing ? (
+          <CallScreen phone={ringing.phone} name={ringing.name} tint={ringing.tint} onEnd={hangUp} />
+        ) : null}
+      </AnimatePresence>
 
       <AnimatePresence>
         {saving ? (

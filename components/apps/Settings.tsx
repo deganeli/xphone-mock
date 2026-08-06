@@ -1,25 +1,25 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import {
-  AntennaIcon,
+  BankIcon,
   BellIcon,
   ChevronLeft,
   ChevronRight,
   ChipIcon,
+  MessagesIcon,
   MoonIcon,
-  DiskIcon,
-  EyeIcon,
+  PhoneIcon,
   PinIcon,
   PlaneIcon,
-  SunIcon,
 } from "../icons";
-import { useSystem } from "@/lib/system";
+import { DEFAULT_WALLPAPER, iconStyles, themes, useSystem } from "@/lib/system";
 import { pushSpring } from "@/lib/motion";
+import { Switch } from "../ui/Switch";
+import { parseImageUrl } from "@/lib/url";
 import styles from "./Settings.module.css";
-
-const knobSpring = { type: "spring", stiffness: 700, damping: 34 } as const;
+import form from "../ui/form.module.css";
 
 const owner = {
   name: "Lukas",
@@ -28,50 +28,252 @@ const owner = {
   phone: "555-0128",
 };
 
-function Tile({ color, children }: { color: string; children: React.ReactNode }) {
-  return (
-    <span className={styles.tile} style={{ background: color }} aria-hidden>
-      {children}
-    </span>
-  );
-}
-
-function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) => void; label: string }) {
+function QuickTile({
+  icon,
+  label,
+  state,
+  on,
+  onChange,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  state: string;
+  on: boolean;
+  onChange: (v: boolean) => void;
+}) {
   return (
     <button
-      role="switch"
-      aria-checked={on}
-      aria-label={label}
-      className={`${styles.toggle} ${on ? styles.toggleOn : ""}`}
+      className={`${styles.quickTile} ${on ? styles.quickOn : ""}`}
+      aria-pressed={on}
       onClick={() => onChange(!on)}
     >
-      <motion.span className={styles.knob} animate={{ x: on ? 20 : 0 }} transition={knobSpring} />
+      <span className={styles.quickIcon}>{icon}</span>
+      <span className={styles.quickBody}>
+        <span className={styles.quickLabel}>{label}</span>
+        <span className={styles.quickState}>{state}</span>
+      </span>
     </button>
   );
 }
 
+function Section({ index, title, children }: { index: string; title: string; children: React.ReactNode }) {
+  return (
+    <section className={styles.section}>
+      <h2 className={styles.sectionHead}>
+        <span className={styles.sectionIndex}>{index}</span>
+        {title}
+      </h2>
+      <div className={styles.rows}>{children}</div>
+    </section>
+  );
+}
+
+function Slider({
+  label,
+  value,
+  onChange,
+  min,
+}: {
+  label: string;
+  value: number;
+  onChange: (v: number) => void;
+  min: number;
+}) {
+  const pct = ((value - min) / (100 - min)) * 100;
+  return (
+    <div className={styles.rowStack}>
+      <span className={styles.stackHead}>
+        <span className={styles.label}>{label}</span>
+        <span className={styles.readout}>{value}%</span>
+      </span>
+      <input
+        className={styles.slider}
+        style={{ "--pct": `${pct}%` } as CSSProperties}
+        type="range"
+        min={min}
+        max={100}
+        value={value}
+        onChange={(event) => onChange(Number(event.target.value))}
+        aria-label={label}
+      />
+    </div>
+  );
+}
+
+const previewApps = [
+  { name: "Telefone", tint: "var(--cash)", icon: <PhoneIcon size={16} />, badge: false },
+  { name: "Mensagens", tint: "var(--sunset)", icon: <MessagesIcon size={16} />, badge: true },
+  { name: "Fleeca", tint: "var(--cash)", icon: <BankIcon size={16} />, badge: false },
+];
+
+function ThemePanel({ onBack }: { onBack: () => void }) {
+  const { theme, setTheme, wallpaper, setWallpaper, iconStyle, setIconStyle } = useSystem();
+  const [draft, setDraft] = useState("");
+  const [invalid, setInvalid] = useState(false);
+
+  const apply = () => {
+    const url = parseImageUrl(draft);
+    if (!url) {
+      setInvalid(true);
+      return;
+    }
+    setWallpaper(url);
+    setDraft("");
+    setInvalid(false);
+  };
+
+  return (
+    <div className={styles.panelScroll}>
+      <button className={form.back} onClick={onBack}>
+        <ChevronLeft />
+        <span>Ajustes</span>
+      </button>
+
+      <h2 className={styles.panelTitle}>Personalização</h2>
+
+      <div className={styles.preview}>
+        <span className={styles.previewChrome} />
+        <span className={styles.previewDock}>
+          {previewApps.map((app) => (
+            <span key={app.name} className={styles.previewSlot}>
+              <span
+                className={`${styles.previewTile} ${styles[iconStyle]}`}
+                style={iconStyle === "material" ? { background: app.tint } : undefined}
+              >
+                {app.icon}
+              </span>
+              {app.badge ? <span className={styles.previewBadge} /> : null}
+            </span>
+          ))}
+        </span>
+      </div>
+
+      <h3 className={styles.panelLabel}>Cor do tema</h3>
+      <div className={styles.swatches}>
+        {themes.map((entry) => (
+          <button
+            key={entry.id}
+            className={`${styles.swatch} ${theme === entry.id ? styles.swatchOn : ""}`}
+            style={{ "--swatch": entry.accent } as CSSProperties}
+            aria-pressed={theme === entry.id}
+            onClick={() => setTheme(entry.id)}
+          >
+            <span className={styles.swatchDisc} />
+            <span className={styles.swatchName}>{entry.name}</span>
+          </button>
+        ))}
+      </div>
+
+      <h3 className={styles.panelLabel}>Ícones</h3>
+      <div className={styles.iconStyles}>
+        {iconStyles.map((entry) => (
+          <button
+            key={entry.id}
+            className={`${styles.iconStyle} ${iconStyle === entry.id ? styles.iconStyleOn : ""}`}
+            aria-pressed={iconStyle === entry.id}
+            onClick={() => setIconStyle(entry.id)}
+          >
+            <span className={`${styles.iconSample} ${styles[entry.id]}`} aria-hidden />
+            <span className={styles.iconStyleName}>{entry.name}</span>
+            <span className={styles.iconStyleNote}>{entry.note}</span>
+          </button>
+        ))}
+      </div>
+
+      <h3 className={styles.panelLabel}>Papel de parede</h3>
+      <div className={styles.urlRow}>
+        <input
+          className={styles.urlInput}
+          value={draft}
+          onChange={(event) => {
+            setDraft(event.target.value);
+            setInvalid(false);
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") apply();
+          }}
+          placeholder="https://…/imagem.png"
+          inputMode="url"
+          aria-label="URL da imagem"
+        />
+        <button className={styles.urlApply} onClick={apply} disabled={draft.trim() === ""}>
+          Aplicar
+        </button>
+      </div>
+      {invalid ? <p className={styles.urlError}>URL inválida. Use um endereço http ou https de imagem.</p> : null}
+
+      <button
+        className={styles.reset}
+        onClick={() => setWallpaper(DEFAULT_WALLPAPER)}
+        disabled={wallpaper === DEFAULT_WALLPAPER}
+      >
+        Restaurar papel de parede padrão
+      </button>
+    </div>
+  );
+}
+
+function ProfilePanel({ onBack }: { onBack: () => void }) {
+  return (
+    <div className={styles.panelScroll}>
+      <button className={form.back} onClick={onBack}>
+        <ChevronLeft />
+        <span>Ajustes</span>
+      </button>
+
+      <div className={styles.identity}>
+        <span className={styles.bigAvatar}>L</span>
+        <h2 className={styles.bigName}>{owner.fullName}</h2>
+        <p className={styles.bigMeta}>Cidadão de Los Santos</p>
+      </div>
+
+      <div className={styles.rows}>
+        <div className={styles.row}>
+          <span className={styles.label}>Nome completo</span>
+          <span className={styles.value}>{owner.fullName}</span>
+        </div>
+        <div className={styles.row}>
+          <span className={styles.label}>Passaporte</span>
+          <span className={styles.value}>{owner.passport}</span>
+        </div>
+        <div className={styles.row}>
+          <span className={styles.label}>Telefone</span>
+          <span className={styles.value}>{owner.phone}</span>
+        </div>
+      </div>
+
+      <p className={styles.panelNote}>
+        Passaporte e telefone são emitidos pela prefeitura e não podem ser alterados no aparelho.
+      </p>
+    </div>
+  );
+}
+
 export function Settings() {
-  const { dnd, setDnd, setLocked } = useSystem();
+  const { dnd, setDnd, setLocked, theme } = useSystem();
   const [airplane, setAirplane] = useState(false);
   const [data, setData] = useState(true);
-  const [vibrate, setVibrate] = useState(true);
   const [location, setLocation] = useState(true);
-  const [discoverable, setDiscoverable] = useState(false);
+  const [vibrate, setVibrate] = useState(true);
+  const [hideNumber, setHideNumber] = useState(false);
   const [brightness, setBrightness] = useState(72);
   const [volume, setVolume] = useState(40);
-  const [profileOpen, setProfileOpen] = useState(false);
+  const [panel, setPanel] = useState<"profile" | "theme" | null>(null);
+
+  const palette = themes.find((entry) => entry.id === theme) ?? themes[0];
 
   return (
     <div className={styles.stage}>
       <div className={styles.scroll}>
+        <p className={styles.eyebrow}>XPHONE · Painel</p>
         <h1 className={styles.title}>Ajustes</h1>
 
-        <button className={styles.profile} onClick={() => setProfileOpen(true)}>
+        <button className={styles.owner} onClick={() => setPanel("profile")}>
           <span className={styles.avatar}>L</span>
-          <span className={styles.profileBody}>
-            <span className={styles.profileName}>{owner.name}</span>
-            <span className={styles.profileMeta}>
-              Passaporte {owner.passport} · Los Santos
+          <span className={styles.ownerBody}>
+            <span className={styles.ownerName}>{owner.name}</span>
+            <span className={styles.ownerMeta}>
+              {owner.passport} · {owner.phone}
             </span>
           </span>
           <span className={styles.chevron}>
@@ -79,115 +281,76 @@ export function Settings() {
           </span>
         </button>
 
-        <h2 className={styles.groupTitle}>Conexões</h2>
-        <section className={styles.group}>
-          <div className={styles.row}>
-            <Tile color="#ff9f2e">
-              <PlaneIcon />
-            </Tile>
-            <span className={styles.label}>Modo avião</span>
-            <Toggle on={airplane} onChange={setAirplane} label="Modo avião" />
-          </div>
-          <div className={styles.row}>
-            <Tile color="var(--bay)">
-              <AntennaIcon />
-            </Tile>
-            <span className={styles.label}>Rede</span>
-            <span className={styles.value}>{airplane ? "Desconectado" : "LS-NET · 5G"}</span>
-          </div>
-          <div className={styles.row}>
-            <Tile color="var(--cash)">
-              <ChipIcon />
-            </Tile>
-            <span className={styles.label}>Dados móveis</span>
-            <Toggle on={data && !airplane} onChange={setData} label="Dados móveis" />
-          </div>
-        </section>
+        <div className={styles.quick}>
+          <QuickTile
+            icon={<PlaneIcon />}
+            label="Modo avião"
+            state={airplane ? "Ligado" : "Desligado"}
+            on={airplane}
+            onChange={setAirplane}
+          />
+          <QuickTile
+            icon={<ChipIcon />}
+            label="Dados móveis"
+            state={airplane ? "Sem sinal" : data ? "LS-NET · 5G" : "Desligado"}
+            on={data && !airplane}
+            onChange={setData}
+          />
+          <QuickTile
+            icon={<MoonIcon />}
+            label="Não perturbe"
+            state={dnd ? "Ligado" : "Desligado"}
+            on={dnd}
+            onChange={setDnd}
+          />
+          <QuickTile
+            icon={<PinIcon />}
+            label="Localização"
+            state={location ? "Precisa" : "Oculta"}
+            on={location}
+            onChange={setLocation}
+          />
+        </div>
 
-        <h2 className={styles.groupTitle}>Tela e som</h2>
-        <section className={styles.group}>
-          <div className={styles.rowStack}>
-            <span className={styles.stackHead}>
-              <Tile color="#ffd06b">
-                <SunIcon />
-              </Tile>
-              <span className={styles.label}>Brilho</span>
-              <span className={styles.readout}>{brightness}%</span>
-            </span>
-            <input
-              className={styles.slider}
-              type="range"
-              min={10}
-              max={100}
-              value={brightness}
-              onChange={(event) => setBrightness(Number(event.target.value))}
-              aria-label="Brilho"
-            />
-          </div>
-          <div className={styles.rowStack}>
-            <span className={styles.stackHead}>
-              <Tile color="#ff4d8d">
-                <BellIcon />
-              </Tile>
-              <span className={styles.label}>Toque</span>
-              <span className={styles.readout}>{volume}%</span>
-            </span>
-            <input
-              className={styles.slider}
-              type="range"
-              min={0}
-              max={100}
-              value={volume}
-              onChange={(event) => setVolume(Number(event.target.value))}
-              aria-label="Volume do toque"
-            />
-          </div>
+        <Section index="01" title="Tela e som">
+          <Slider label="Brilho" value={brightness} onChange={setBrightness} min={10} />
+          <Slider label="Toque" value={volume} onChange={setVolume} min={0} />
           <div className={styles.row}>
-            <Tile color="var(--steel)">
+            <span className={styles.rowIcon}>
               <BellIcon />
-            </Tile>
+            </span>
             <span className={styles.label}>Vibrar ao receber</span>
-            <Toggle on={vibrate} onChange={setVibrate} label="Vibrar ao receber" />
+            <Switch on={vibrate} onChange={setVibrate} label="Vibrar ao receber" />
           </div>
-          <div className={styles.row}>
-            <Tile color="var(--dnd)">
-              <MoonIcon />
-            </Tile>
-            <span className={styles.label}>Não perturbe</span>
-            <Toggle on={dnd} onChange={setDnd} label="Não perturbe" />
-          </div>
-        </section>
+        </Section>
 
-        <h2 className={styles.groupTitle}>Privacidade</h2>
-        <section className={styles.group}>
-          <div className={styles.row}>
-            <Tile color="#ff453a">
-              <PinIcon />
-            </Tile>
-            <span className={styles.label}>Compartilhar localização</span>
-            <Toggle on={location} onChange={setLocation} label="Compartilhar localização" />
-          </div>
-          <div className={styles.row}>
-            <Tile color="var(--flame)">
-              <EyeIcon />
-            </Tile>
-            <span className={styles.label}>Aparecer no Vibe</span>
-            <Toggle on={discoverable} onChange={setDiscoverable} label="Aparecer no Vibe" />
-          </div>
-        </section>
+        <Section index="02" title="Personalização">
+          <button className={styles.row} onClick={() => setPanel("theme")}>
+            <span className={styles.swatchDot} style={{ background: palette.accent }} aria-hidden />
+            <span className={styles.label}>Tema e papel de parede</span>
+            <span className={styles.value}>{palette.name}</span>
+            <span className={styles.chevron}>
+              <ChevronRight />
+            </span>
+          </button>
+        </Section>
 
-        <h2 className={styles.groupTitle}>Sistema</h2>
-        <section className={styles.group}>
+        <Section index="03" title="Privacidade">
+          <div className={styles.row}>
+            <span className={styles.label}>Ocultar número em chamadas</span>
+            <Switch on={hideNumber} onChange={setHideNumber} label="Ocultar número em chamadas" />
+          </div>
+        </Section>
+
+        <Section index="04" title="Sistema">
           <div className={styles.rowStack}>
             <span className={styles.stackHead}>
-              <Tile color="var(--market)">
-                <DiskIcon />
-              </Tile>
               <span className={styles.label}>Armazenamento</span>
               <span className={styles.readout}>43,2 / 64 GB</span>
             </span>
             <span className={styles.bar}>
-              <span className={styles.barFill} style={{ width: "68%" }} />
+              <span className={styles.barApps} style={{ width: "35%" }} />
+              <span className={styles.barMedia} style={{ width: "33%" }} />
             </span>
             <span className={styles.legend}>
               <span className={styles.legendItem}>
@@ -199,66 +362,35 @@ export function Settings() {
             </span>
           </div>
           <div className={styles.row}>
-            <Tile color="var(--steel)">
-              <ChipIcon />
-            </Tile>
             <span className={styles.label}>Firmware</span>
             <span className={styles.value}>XPHONE 1.2</span>
           </div>
           <button className={styles.row} onClick={() => setLocked(true)}>
-            <Tile color="var(--dnd)">
-              <MoonIcon />
-            </Tile>
             <span className={styles.label}>Bloquear agora</span>
             <span className={styles.chevron}>
               <ChevronRight />
             </span>
           </button>
-        </section>
+        </Section>
 
         <p className={styles.serial}>SN 88-LS-2019-XK · build 4471</p>
       </div>
 
       <AnimatePresence>
-        {profileOpen ? (
+        {panel ? (
           <motion.section
-            className={styles.profilePanel}
+            key={panel}
+            className={styles.panel}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={pushSpring}
           >
-            <div className={styles.panelScroll}>
-              <button className={styles.back} onClick={() => setProfileOpen(false)}>
-                <ChevronLeft />
-                <span>Ajustes</span>
-              </button>
-
-              <div className={styles.identity}>
-                <span className={styles.bigAvatar}>L</span>
-                <h2 className={styles.bigName}>{owner.fullName}</h2>
-                <p className={styles.bigMeta}>Cidadão de Los Santos</p>
-              </div>
-
-              <section className={styles.group}>
-                <div className={styles.row}>
-                  <span className={styles.label}>Nome completo</span>
-                  <span className={styles.fieldText}>{owner.fullName}</span>
-                </div>
-                <div className={styles.row}>
-                  <span className={styles.label}>Passaporte</span>
-                  <span className={styles.value}>{owner.passport}</span>
-                </div>
-                <div className={styles.row}>
-                  <span className={styles.label}>Telefone</span>
-                  <span className={styles.value}>{owner.phone}</span>
-                </div>
-              </section>
-
-              <p className={styles.panelNote}>
-                Passaporte e telefone são emitidos pela prefeitura e não podem ser alterados no aparelho.
-              </p>
-            </div>
+            {panel === "profile" ? (
+              <ProfilePanel onBack={() => setPanel(null)} />
+            ) : (
+              <ThemePanel onBack={() => setPanel(null)} />
+            )}
           </motion.section>
         ) : null}
       </AnimatePresence>

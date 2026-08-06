@@ -21,6 +21,31 @@ export type MatchChat = {
   messages: MatchMessage[];
 };
 
+export type MyProfile = {
+  name: string;
+  age: number;
+  district: string;
+  bio: string;
+  /** Vazio = usa o gradiente com a inicial do nome. */
+  photo: string;
+  gradient: [string, string];
+  showDistance: boolean;
+  paused: boolean;
+};
+
+export const BIO_LIMIT = 180;
+
+export const me: MyProfile = {
+  name: "Lukas",
+  age: 28,
+  district: "Little Seoul",
+  bio: "Plantão à noite, oficina de dia. Se puxar assunto sobre carro velho eu respondo em 2 minutos.",
+  photo: "",
+  gradient: ["#ff4d8d", "#3b1560"],
+  showDistance: true,
+  paused: false,
+};
+
 export const chats: MatchChat[] = [
   {
     id: "mila",

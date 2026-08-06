@@ -6,6 +6,7 @@ import { ChevronLeft } from "../icons";
 import { categories, formatPrice, listings, type Category } from "@/lib/market";
 import { pushSpring } from "@/lib/motion";
 import styles from "./Market.module.css";
+import form from "../ui/form.module.css";
 
 export function Market() {
   const [category, setCategory] = useState<Category>("Tudo");
@@ -84,7 +85,7 @@ export function Market() {
                   className={styles.hero}
                   style={{ background: `linear-gradient(150deg, ${open.gradient[0]}, ${open.gradient[1]})` }}
                 >
-                  <button className={styles.back} onClick={() => setOpenId(null)}>
+                  <button className={`${form.back} ${styles.backFloat}`} onClick={() => setOpenId(null)}>
                     <ChevronLeft />
                     <span>Anúncios</span>
                   </button>

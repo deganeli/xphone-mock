@@ -32,10 +32,35 @@
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
 }
 
+.material .glyph {
+  color: var(--on-tint);
+}
+
+.solid {
+  background: var(--accent);
+}
+
+.solid .glyph {
+  color: var(--on-accent);
+}
+
+/* Vidro: o papel de parede aparece por baixo, então o brilho da borda é quem desenha a forma. */
+.glass {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+.glass .glyph {
+  color: var(--text);
+}
+
 .glyph {
   display: grid;
   place-items: center;
-  color: var(--on-tint);
 }
 
 .badge {
@@ -48,8 +73,8 @@
   height: 20px;
   padding: 0 5px;
   border-radius: 10px;
-  background: var(--danger);
-  color: #fff;
+  background: var(--accent);
+  color: var(--on-accent);
   font-size: 12px;
   font-weight: 600;
   line-height: 1;

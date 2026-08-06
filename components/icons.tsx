@@ -224,16 +224,6 @@ export function PlaneIcon({ size = 16 }: IconProps) {
   );
 }
 
-export function AntennaIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="12" cy="9" r="2.4" fill="currentColor" />
-      <path d="M7.4 4.4a6.5 6.5 0 0 0 0 9.2M16.6 4.4a6.5 6.5 0 0 1 0 9.2M4.6 1.6a10.5 10.5 0 0 0 0 14.8M19.4 1.6a10.5 10.5 0 0 1 0 14.8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M10.6 12.8h2.8L15 22.4H9l1.6-9.6Z" fill="currentColor" />
-    </svg>
-  );
-}
-
 export function MoonIcon({ size = 16 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -241,15 +231,6 @@ export function MoonIcon({ size = 16 }: IconProps) {
         d="M20.4 14.6A8.6 8.6 0 0 1 9.4 3.6a8.8 8.8 0 1 0 11 11Z"
         fill="currentColor"
       />
-    </svg>
-  );
-}
-
-export function SunIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="4.4" fill="currentColor" />
-      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M19.1 4.9l-2.2 2.2M7.1 16.9l-2.2 2.2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   );
 }
@@ -281,21 +262,131 @@ export function EyeIcon({ size = 16 }: IconProps) {
   );
 }
 
-export function DiskIcon({ size = 16 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
-      <rect x="3" y="4.4" width="18" height="15.2" rx="3" fill="currentColor" />
-      <circle cx="12" cy="12" r="3.8" fill="#0a0a0f" />
-      <circle cx="12" cy="12" r="1.2" fill="currentColor" />
-    </svg>
-  );
-}
-
 export function ChipIcon({ size = 16 }: IconProps) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect x="6" y="6" width="12" height="12" rx="2.6" fill="currentColor" />
       <path d="M9.4 2.6v2.6M14.6 2.6v2.6M9.4 18.8v2.6M14.6 18.8v2.6M2.6 9.4h2.6M2.6 14.6h2.6M18.8 9.4h2.6M18.8 14.6h2.6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function SearchIcon({ size = 16 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <circle cx="10.6" cy="10.6" r="6.4" stroke="currentColor" strokeWidth="1.9" />
+      <path d="m15.4 15.4 4.4 4.4" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function MusicIcon({ size = 30 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden>
+      <path d="M12 22V8.6l12-2.4V19" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+      <circle cx="9" cy="22.4" r="3.4" fill="currentColor" />
+      <circle cx="21" cy="19.4" r="3.4" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function PlayIcon({ size = 22 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M8 5.4 19 12 8 18.6V5.4Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function PauseIcon({ size = 22 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M8.4 5h2.4v14H8.4zM13.2 5h2.4v14h-2.4z" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function SkipIcon({ size = 22 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M6 5.6 16 12 6 18.4V5.6Z" fill="currentColor" />
+      <path d="M18 5.4v13.2" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function ShuffleIcon({ size = 18 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M3 6.6h3.4c1.2 0 2.3.6 3 1.6l5.2 7.6c.7 1 1.8 1.6 3 1.6H21M3 17.4h3.4c1.2 0 2.3-.6 3-1.6l1.3-1.9M14.1 9.5l1.5-2.1c.7-1 1.8-1.6 3-1.6H21"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path d="m18.6 3.4 2.6 2.4-2.6 2.4M18.6 15.2l2.6 2.4-2.6 2.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function RepeatIcon({ size = 18 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M7 6.6h10a3.4 3.4 0 0 1 3.4 3.4v1.4M17 17.4H7A3.4 3.4 0 0 1 3.6 14v-1.4"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path d="m14.6 4.2 2.6 2.4-2.6 2.4M9.4 15 6.8 17.4l2.6 2.4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function EyeOffIcon({ size = 16 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M4.2 8.4C2.9 9.6 2 11 2 11s3.6 6 10 6c1.5 0 2.8-.3 3.9-.8M19.4 14.4C21 13.1 22 11 22 11s-3.6-6-10-6c-1 0-2 .2-2.8.4"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+      <path d="M9.9 8.9a3 3 0 0 0 4.2 4.2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      <path d="M4 4l16 16" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function MicOffIcon({ size = 20 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path
+        d="M12 3.6a2.6 2.6 0 0 1 2.6 2.6v5.2a2.6 2.6 0 0 1-5.2 0V6.2A2.6 2.6 0 0 1 12 3.6Z"
+        stroke="currentColor"
+        strokeWidth="1.7"
+      />
+      <path
+        d="M6.2 11a5.8 5.8 0 0 0 11.6 0M12 16.8v3.6"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
+      <path d="M4 3.6 20 20" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function SpeakerIcon({ size = 20 }: IconProps) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M4 9.4h3.4L12 5.4v13.2l-4.6-4H4a1 1 0 0 1-1-1v-3.2a1 1 0 0 1 1-1Z" fill="currentColor" />
+      <path
+        d="M15.6 9.2a4 4 0 0 1 0 5.6M18.4 6.4a8 8 0 0 1 0 11.2"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }

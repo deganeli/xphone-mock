@@ -3,9 +3,12 @@
 import { motion } from "framer-motion";
 import { apps, type AppId } from "./appRegistry";
 import { appSpring } from "@/lib/motion";
+import { useSystem } from "@/lib/system";
 import styles from "./HomeScreen.module.css";
 
 export function HomeScreen({ onOpen }: { onOpen: (id: AppId) => void }) {
+  const { iconStyle } = useSystem();
+
   return (
     <div className={styles.home}>
       <nav className={styles.grid} aria-label="Apps">
@@ -13,8 +16,8 @@ export function HomeScreen({ onOpen }: { onOpen: (id: AppId) => void }) {
           <button key={app.id} className={styles.app} onClick={() => onOpen(app.id)}>
             <motion.span
               layoutId={`shell-${app.id}`}
-              className={styles.tile}
-              style={{ background: app.tint }}
+              className={`${styles.tile} ${styles[iconStyle]}`}
+              style={iconStyle === "material" ? { background: app.tint } : undefined}
               transition={appSpring}
             >
               <motion.span layoutId={`glyph-${app.id}`} className={styles.glyph}>

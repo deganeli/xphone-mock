@@ -1,0 +1,125 @@
+.screen {
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 96px 24px 54px;
+  background:
+    radial-gradient(120% 60% at 50% 0%, color-mix(in srgb, var(--cash) 14%, transparent), transparent 62%),
+    var(--void);
+}
+
+.head {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.avatarWrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 116px;
+  height: 116px;
+  margin-bottom: 22px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  color: var(--on-tint);
+  font-size: 44px;
+  font-weight: 600;
+}
+
+/* Ondas de chamada: duas cópias defasadas dão o efeito contínuo sem keyframe extra. */
+.ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid;
+  animation: pulse 2s var(--ease-ios) infinite;
+}
+
+.ringLate {
+  animation-delay: 1s;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.5;
+    scale: 1;
+  }
+  to {
+    opacity: 0;
+    scale: 1.55;
+  }
+}
+
+.name {
+  margin: 0;
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.number {
+  margin: 4px 0 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+.status {
+  margin: 16px 0 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  width: 84px;
+  padding: 14px 0 12px;
+  border-radius: 18px;
+  background: var(--fill);
+  font-size: 12px;
+  color: var(--text-dim);
+  transition:
+    background 0.16s var(--ease-ios),
+    color 0.16s var(--ease-ios);
+}
+
+.controlOn {
+  background: var(--text);
+  color: var(--on-tint);
+}
+
+.end {
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: var(--danger);
+  color: var(--text);
+  rotate: 135deg;
+}

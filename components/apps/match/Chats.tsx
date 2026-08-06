@@ -6,6 +6,7 @@ import { ChevronLeft, SendIcon } from "../../icons";
 import { chats as seed, profiles, type MatchChat } from "@/lib/match";
 import { pushSpring } from "@/lib/motion";
 import styles from "../Match.module.css";
+import form from "../../ui/form.module.css";
 
 export function Chats({ onBack }: { onBack: () => void }) {
   const [chats, setChats] = useState<MatchChat[]>(seed);
@@ -51,7 +52,7 @@ export function Chats({ onBack }: { onBack: () => void }) {
       transition={pushSpring}
     >
       <div className={styles.chatsScroll}>
-        <button className={styles.back} onClick={onBack}>
+        <button className={form.back} onClick={onBack}>
           <ChevronLeft />
           <span>Vibe</span>
         </button>
@@ -110,7 +111,7 @@ export function Chats({ onBack }: { onBack: () => void }) {
             transition={pushSpring}
           >
             <header className={styles.threadBar}>
-              <button className={styles.back} onClick={() => setOpenId(null)}>
+              <button className={form.back} onClick={() => setOpenId(null)}>
                 <ChevronLeft />
                 <span>Conversas</span>
               </button>

@@ -9,7 +9,7 @@
   /* Gradiente por cima da arte: sustenta a leitura do relógio e dos cards. */
   background:
     linear-gradient(180deg, rgba(4, 4, 9, 0.34), rgba(4, 4, 9, 0.1) 30%, rgba(4, 4, 9, 0.76) 74%, rgba(4, 4, 9, 0.95)),
-    url("/bg.png") center / cover no-repeat,
+    var(--wallpaper) center / cover no-repeat,
     var(--void);
 }
 

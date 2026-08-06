@@ -1,0 +1,117 @@
+/* Primitivos de formulário e navegação compartilhados pelos editores dos apps.
+   A cor de destaque vem de --form-tint, que cada app define no container. */
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  font-size: 15px;
+  color: var(--accent);
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono), monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.count {
+  letter-spacing: 0.06em;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  padding: 0 13px;
+  border: 1px solid var(--glass-line);
+  border-radius: 12px;
+  background: var(--fill);
+  font-size: 13.5px;
+}
+
+.area {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--glass-line);
+  border-radius: 12px;
+  background: var(--fill);
+  font-size: 13.5px;
+  line-height: 1.45;
+  resize: none;
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.apply {
+  flex: none;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: var(--form-tint, var(--accent));
+  color: var(--form-ink, var(--on-accent));
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.error {
+  margin: 8px 2px 0;
+  font-size: 11.5px;
+  color: var(--danger);
+}
+
+.switchRow {
+  --switch-tint: var(--form-tint, var(--accent));
+  --switch-ink: var(--form-ink, var(--on-accent));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--glass-line);
+}
+
+.switchRow:first-of-type {
+  margin-top: 20px;
+  border-top: 1px solid var(--glass-line);
+}
+
+.switchLabel {
+  font-size: 14.5px;
+}
+
+.note {
+  margin: 10px 2px 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--text-faint);
+}
+
+.save {
+  width: 100%;
+  height: 46px;
+  margin-top: 22px;
+  border-radius: 14px;
+  background: var(--form-tint, var(--accent));
+  color: var(--form-ink, var(--on-accent));
+  font-size: 14.5px;
+  font-weight: 600;
+}
+
+.save:disabled {
+  opacity: 0.34;
+  cursor: default;
+}

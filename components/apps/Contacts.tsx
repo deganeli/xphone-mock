@@ -6,6 +6,7 @@ import { ChevronLeft, MessagesIcon, PhoneIcon, SendIcon, StarIcon } from "../ico
 import { useContacts, type Contact } from "@/lib/contacts";
 import { pushSpring } from "@/lib/motion";
 import styles from "./Contacts.module.css";
+import form from "../ui/form.module.css";
 
 const TOAST_MS = 1800;
 
@@ -160,7 +161,7 @@ export function Contacts() {
                 style={{ background: `linear-gradient(180deg, ${open.tint}26, transparent 240px)` }}
               >
                 <div className={styles.detailBar}>
-                  <button className={styles.back} onClick={() => setOpenId(null)}>
+                  <button className={form.back} onClick={() => setOpenId(null)}>
                     <ChevronLeft />
                     <span>Contatos</span>
                   </button>
@@ -196,7 +197,7 @@ export function Contacts() {
                     Mensagem
                   </button>
                   <button className={styles.action}>
-                    <span className={styles.actionGlyph} style={{ color: "var(--bay)" }}>
+                    <span className={styles.actionGlyph} style={{ color: "var(--accent)" }}>
                       <SendIcon size={19} />
                     </span>
                     Transferir

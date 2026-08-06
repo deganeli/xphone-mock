@@ -27,8 +27,31 @@
 .card {
   padding: 18px 18px 14px;
   border-radius: 20px;
-  border: 1px solid rgba(47, 217, 107, 0.22);
-  background: linear-gradient(155deg, rgba(47, 217, 107, 0.14), rgba(20, 20, 27, 0.9) 62%);
+  border: 1px solid color-mix(in srgb, var(--cash) 24%, transparent);
+  background: linear-gradient(155deg, color-mix(in srgb, var(--cash) 15%, transparent), rgba(20, 20, 27, 0.9) 62%);
+}
+
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mask {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--fill);
+  color: var(--text-dim);
+}
+
+/* Só embaça: o layout não pode saltar ao ocultar, o número segue ocupando a linha. */
+.masked {
+  filter: blur(9px);
+  user-select: none;
 }
 
 .cardLabel {
@@ -219,14 +242,14 @@
   gap: 26px;
   padding: 30px 26px 56px;
   background:
-    radial-gradient(90% 50% at 50% 34%, rgba(47, 217, 107, 0.16), transparent 70%),
+    radial-gradient(90% 50% at 50% 34%, color-mix(in srgb, var(--cash) 17%, transparent), transparent 70%),
     #0a0d0b;
 }
 
 .check {
   width: 96px;
   height: 96px;
-  filter: drop-shadow(0 0 18px rgba(47, 217, 107, 0.35));
+  filter: drop-shadow(0 0 18px color-mix(in srgb, var(--cash) 38%, transparent));
 }
 
 .receiptBody {

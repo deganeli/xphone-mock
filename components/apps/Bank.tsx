@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, type FormEvent } from "react";
+import { EyeIcon, EyeOffIcon } from "../icons";
 import { account, formatBRL, transactions as seed, type Transaction } from "@/lib/bank";
 import { Sheet } from "../ui/Sheet";
 import styles from "./Bank.module.css";
@@ -15,6 +16,9 @@ export function Bank() {
   const [receipt, setReceipt] = useState<Receipt | null>(null);
   const [target, setTarget] = useState("");
   const [amount, setAmount] = useState("");
+  const [masked, setMasked] = useState(false);
+
+  const hide = masked ? styles.masked : "";
 
   const parsed = Number(amount.replace(",", "."));
   const valid = target.trim().length > 0 && parsed > 0 && parsed <= balance;
@@ -44,11 +48,23 @@ export function Bank() {
         </header>
 
         <section className={styles.card}>
-          <p className={styles.cardLabel}>Saldo em conta</p>
-          <p className={styles.balance}>{formatBRL(balance)}</p>
+          <div className={styles.cardHead}>
+            <p className={styles.cardLabel}>Saldo em conta</p>
+            <button
+              className={styles.mask}
+              onClick={() => setMasked(!masked)}
+              aria-pressed={masked}
+              aria-label={masked ? "Mostrar valores" : "Ocultar valores"}
+            >
+              {masked ? <EyeOffIcon size={18} /> : <EyeIcon size={18} />}
+            </button>
+          </div>
+          <p className={`${styles.balance} ${hide}`}>{formatBRL(balance)}</p>
           <div className={styles.cardFoot}>
             <span className={styles.iban}>{account.iban}</span>
-            <span className={styles.savings}>Poupança {formatBRL(account.savings)}</span>
+            <span className={styles.savings}>
+              Poupança <span className={hide}>{formatBRL(account.savings)}</span>
+            </span>
           </div>
         </section>
 
@@ -75,7 +91,7 @@ export function Bank() {
                 </p>
               </div>
               <div className={styles.entryRight}>
-                <p className={`${styles.amount} ${entry.amount > 0 ? styles.credit : styles.debit}`}>
+                <p className={`${styles.amount} ${entry.amount > 0 ? styles.credit : styles.debit} ${hide}`}>
                   {entry.amount > 0 ? "+" : "−"}
                   {formatBRL(Math.abs(entry.amount))}
                 </p>

@@ -9,15 +9,21 @@
 .scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 58px 0 52px;
+  padding: 0 0 52px;
+  /* Feed sangra até a borda: a barra de rolagem roubaria a largura da foto. */
+  scrollbar-width: none;
+}
+
+.scroll::-webkit-scrollbar {
+  width: 0;
 }
 
 .directButton {
   position: relative;
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   color: var(--text);
 }
@@ -50,11 +56,16 @@
   text-align: left;
 }
 
+/* Fixa no topo: a foto passa por baixo da barra em vez de aparecer recortada nela. */
 .head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 18px 12px;
+  gap: 8px;
+  padding: 58px 18px 12px;
+  background: var(--void);
 }
 
 .title {
@@ -91,6 +102,7 @@
 }
 
 .storyRing {
+  position: relative;
   display: grid;
   place-items: center;
   width: 60px;
@@ -264,14 +276,6 @@
   height: 100%;
   overflow-y: auto;
   padding: 58px 18px 44px;
-}
-
-.back {
-  display: flex;
-  align-items: center;
-  gap: 1px;
-  font-size: 15px;
-  color: var(--bay);
 }
 
 .profileHead {
@@ -455,7 +459,7 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  background: var(--bay);
+  background: var(--accent);
 }
 
 .directThread {
@@ -770,4 +774,267 @@
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.4);
   color: #fff;
+}
+
+.activity {
+  position: absolute;
+  inset: 0;
+  z-index: 22;
+  background: var(--void);
+}
+
+.activityScroll {
+  height: 100%;
+  overflow-y: auto;
+  padding: 58px 18px 44px;
+}
+
+.activityTitle {
+  margin: 10px 0 6px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.activityBucket {
+  margin: 20px 0 6px;
+  font-family: var(--font-mono), monospace;
+  font-size: 9.5px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.activityRow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 0;
+}
+
+.activityAvatar {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--on-tint);
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.activityGlyph {
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  border: 2px solid var(--void);
+}
+
+.curtida {
+  background: var(--like);
+  color: var(--text);
+}
+
+.comentario {
+  background: var(--accent);
+  color: var(--on-tint);
+}
+
+.mencao {
+  background: var(--violet);
+  color: var(--on-tint);
+}
+
+.seguidor {
+  background: var(--cash);
+  color: var(--on-cash);
+}
+
+.activityText {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--text-dim);
+}
+
+.activityHandle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.activityAt {
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+
+.follow {
+  flex: none;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 9px;
+  background: var(--accent);
+  color: var(--on-tint);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.following {
+  background: var(--fill-strong);
+  color: var(--text);
+}
+
+.activityThumb {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+
+.editor {
+  --form-tint: var(--flame);
+  --form-ink: var(--on-flame);
+  position: absolute;
+  inset: 0;
+  z-index: 23;
+  background: var(--void);
+}
+
+.editorScroll {
+  height: 100%;
+  overflow-y: auto;
+  padding: 58px 18px 44px;
+}
+
+.editorTitle {
+  margin: 10px 0 18px;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.editorHead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 6px;
+}
+
+.editorAvatar {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  color: var(--on-vista);
+  font-size: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.editorIdentity {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.editorName {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.editorHandle {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+
+.menuWrap {
+  position: relative;
+  flex: none;
+  /* Empurra os botões de ação pra direita: a engrenagem pertence ao título. */
+  margin-right: auto;
+}
+
+.menuButton {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--text-dim);
+}
+
+/* Captura o clique fora sem escurecer a tela: é um menu, não um modal. */
+.menuScrim {
+  position: fixed;
+  inset: 0;
+  z-index: 24;
+  cursor: default;
+}
+
+.menu {
+  position: absolute;
+  top: 36px;
+  left: 0;
+  z-index: 25;
+  display: grid;
+  min-width: 152px;
+  padding: 5px;
+  border-radius: 14px;
+  border: 1px solid var(--glass-line);
+  background: var(--surface-raised);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5);
+  transform-origin: top left;
+}
+
+.menuItem {
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.menuItem + .menuItem {
+  border-top: 1px solid var(--glass-line);
+  border-radius: 10px;
+}
+
+.editAction {
+  flex: 1;
+  height: 34px;
+  border-radius: 10px;
+  background: var(--fill-strong);
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.privateTag {
+  margin-left: 8px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: var(--fill-strong);
+  font-family: var(--font-mono), monospace;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  vertical-align: middle;
 }

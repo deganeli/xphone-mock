@@ -56,7 +56,7 @@
 }
 
 .efetuada {
-  color: var(--bay);
+  color: var(--accent);
 }
 
 .recebida {
@@ -185,9 +185,9 @@
   justify-self: start;
   padding: 8px 15px 8px 12px;
   border-radius: 20px;
-  border: 1px solid rgba(53, 199, 255, 0.28);
-  background: rgba(53, 199, 255, 0.1);
-  color: var(--bay);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
   font-size: 13.5px;
   font-weight: 500;
 }
@@ -198,30 +198,26 @@
 }
 
 .erase {
+  display: flex;
+  align-items: center;
+  gap: 7px;
   justify-self: end;
-  display: grid;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 69, 58, 0.28);
-  background: rgba(255, 69, 58, 0.1);
-  color: #ff6259;
-  transition:
-    background 0.14s var(--ease-ios),
-    color 0.14s var(--ease-ios);
+  padding: 8px 15px 8px 12px;
+  border-radius: 20px;
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  color: var(--danger);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background 0.14s var(--ease-ios);
 }
 
 .erase:active {
-  background: rgba(255, 69, 58, 0.22);
-  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 24%, transparent);
 }
 
 .erase:disabled {
-  border-color: var(--glass-line);
-  background: none;
-  color: var(--text-faint);
-  opacity: 0.5;
+  opacity: 0.32;
   cursor: default;
 }
 
